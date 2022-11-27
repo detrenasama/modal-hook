@@ -1,6 +1,11 @@
 @detrenasama/modal-hooker
 =========================
 
+[![NPM version][npm-image]][npm-url]
+
+[npm-image]: https://img.shields.io/badge/npm-1.0.0-blue
+[npm-url]: https://npmjs.org/package/address
+
 Control your modals with hook
 
 ## Install
