@@ -1,0 +1,14 @@
+{
+  "name": "@detrenasama/modal-hooker",
+  "version": "1.0.0",
+  "description": "Modal components by using hooks",
+  "main": "index.js",
+  "keywords": [
+    "react",
+    "modal"
+  ],
+  "author": {
+    "name": "Bogdan Kropotov",
+    "email": "detrenasama@gmail.com"
+  }
+}
