@@ -1,6 +1,6 @@
 {
   "name": "@detrenasama/modal-hooker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Modal components by using hooks",
   "main": "index.js",
   "keywords": [
