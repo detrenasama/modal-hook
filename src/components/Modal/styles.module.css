@@ -1,0 +1,85 @@
+.background {
+    background: #000 !important;
+    opacity: .1 !important;
+    box-sizing: border-box;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition-duration: inherit;
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(.47,0,.74,.71);
+}
+
+.container {
+    -webkit-backface-visibility: hidden;
+    height: 100%;
+    left: 0;
+    outline: none;
+    position: fixed;
+    -webkit-tap-highlight-color: transparent;
+    top: 0;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    width: 100%;
+    z-index: 99992;
+}
+
+.opening {
+    animation: modalSlideDown 360ms ease;
+    animation-iteration-count: 1;
+}
+
+.closing {
+    animation: modalSlideDown 360ms ease reverse;
+    animation-iteration-count: 1;
+}
+
+.inner {
+    box-sizing: border-box;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.body {
+    box-sizing: border-box;
+    -webkit-backface-visibility: hidden;
+    outline: none;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    top: 0;
+    transition-property: transform,opacity;
+    white-space: normal;
+    z-index: 99994;
+
+    background: #fff;
+    max-width: 100%;
+    text-align: left;
+    vertical-align: middle;
+
+    position: absolute;
+    bottom: 0;
+    display: block;
+    left: 50%;
+    width: 720px;
+    margin-left: -360px;
+    border-radius: 0;
+    padding: 0;
+    height: 100%;
+}
+
+@keyframes modalSlideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

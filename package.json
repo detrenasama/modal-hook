@@ -1,8 +1,9 @@
 {
   "name": "@detrenasama/modal-hooker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Modal components by using hooks",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "keywords": [
     "react",
     "modal"
@@ -11,5 +12,16 @@
     "name": "Bogdan Kropotov",
     "email": "detrenasama@gmail.com"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.20.2",
+    "@babel/preset-env": "^7.20.2"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1"
+  },
+  "scripts": {
+    "build": "rm -rf dist && NODE_ENV=production babel src --out-dir dist --copy-files"
+  }
 }
