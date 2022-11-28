@@ -8,8 +8,7 @@ exports.useModal = exports.ModalProvider = void 0;
 require("core-js/modules/web.dom-collections.iterator.js");
 var _react = _interopRequireWildcard(require("react"));
 var _Modal = _interopRequireDefault(require("./components/Modal"));
-const _excluded = ["DefaultModalComponent"],
-  _excluded2 = ["Container", "modal", "unsetModal"];
+const _excluded = ["DefaultModalComponent"];
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -23,7 +22,7 @@ const ModalProvider = _ref => {
     } = _ref,
     props = _objectWithoutProperties(_ref, _excluded);
   const [modal, setModal] = (0, _react.useState)();
-  const [ContainerComponent, setContainerComponent] = (0, _react.useState)();
+  const [ContainerComponent, setContainerComponent] = (0, _react.useState)(() => DefaultModalComponent);
   const [isOpening, setIsOpening] = (0, _react.useState)(false);
   const [isClosing, setIsClosing] = (0, _react.useState)(false);
   const unsetModal = (0, _react.useCallback)(() => {
@@ -35,6 +34,7 @@ const ModalProvider = _ref => {
   const closeModal = () => {
     setIsClosing(true);
   };
+  console.log(ContainerComponent);
   return /*#__PURE__*/_react.default.createElement(ModalContext.Provider, _extends({
     value: {
       setModal,
@@ -42,32 +42,23 @@ const ModalProvider = _ref => {
       closeModal,
       setContainerComponent
     }
-  }, props), props.children, modal && /*#__PURE__*/_react.default.createElement(RenderModal, {
-    Container: ContainerComponent ? ContainerComponent : DefaultModalComponent,
+  }, props), props.children, ContainerComponent && modal && RenderModal(ContainerComponent, modal, unsetModal, isOpening, isClosing, setIsOpening, setIsClosing));
+};
+exports.ModalProvider = ModalProvider;
+const RenderModal = (Container, modal, unsetModal, isOpening, isClosing, setIsOpening, setIsClosing) => {
+  console.log(Container, modal);
+  return /*#__PURE__*/_react.default.createElement(Container, {
     modal: modal,
     unsetModal: unsetModal,
     isOpening: isOpening,
     isClosing: isClosing,
     setIsOpening: setIsOpening,
     setIsClosing: setIsClosing
-  }));
-};
-exports.ModalProvider = ModalProvider;
-const RenderModal = _ref2 => {
-  let {
-      Container,
-      modal,
-      unsetModal
-    } = _ref2,
-    props = _objectWithoutProperties(_ref2, _excluded2);
-  return /*#__PURE__*/_react.default.createElement(Container, _extends({
-    modal: modal,
-    unsetModal: unsetModal
-  }, props));
+  });
 };
 const useModal = function useModal(ModalComponent) {
   let props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  let ContainerComponent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  let ContainerComponent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
   const context = (0, _react.useContext)(ModalContext);
   if (context === undefined) throw new Error("useModal must be used within a ModalProvider");
   const {
@@ -77,7 +68,7 @@ const useModal = function useModal(ModalComponent) {
     setContainerComponent
   } = context;
   const show = (0, _react.useCallback)(() => {
-    setContainerComponent(ContainerComponent);
+    setContainerComponent(() => ContainerComponent);
     setModal( /*#__PURE__*/_react.default.createElement(ModalComponent, props));
     openModal();
   }, [setModal, openModal, ContainerComponent]);
