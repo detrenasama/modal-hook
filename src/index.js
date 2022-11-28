@@ -24,7 +24,7 @@ const ModalProvider = ({DefaultModalComponent = Modal, ...props}) => {
 
     return <ModalContext.Provider value={{setModal, openModal, closeModal, setContainerComponent}} {...props}>
         {props.children}
-        {ContainerComponent && modal && RenderModal(ContainerComponent,
+        {modal && RenderModal(ContainerComponent ? ContainerComponent : DefaultModalComponent,
                                modal,
                                unsetModal,
                                isOpening,

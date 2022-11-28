@@ -41,7 +41,7 @@ const ModalProvider = _ref => {
       closeModal,
       setContainerComponent
     }
-  }, props), props.children, ContainerComponent && modal && RenderModal(ContainerComponent, modal, unsetModal, isOpening, isClosing, setIsOpening, setIsClosing));
+  }, props), props.children, modal && RenderModal(ContainerComponent ? ContainerComponent : DefaultModalComponent, modal, unsetModal, isOpening, isClosing, setIsOpening, setIsClosing));
 };
 exports.ModalProvider = ModalProvider;
 const RenderModal = (Container, modal, unsetModal, isOpening, isClosing, setIsOpening, setIsClosing) => {
