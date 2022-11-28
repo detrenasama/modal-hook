@@ -22,8 +22,6 @@ const ModalProvider = ({DefaultModalComponent = Modal, ...props}) => {
         setIsClosing(true)
     }
 
-    console.log(ContainerComponent)
-
     return <ModalContext.Provider value={{setModal, openModal, closeModal, setContainerComponent}} {...props}>
         {props.children}
         {ContainerComponent && modal && RenderModal(ContainerComponent,
@@ -37,7 +35,6 @@ const ModalProvider = ({DefaultModalComponent = Modal, ...props}) => {
 }
 
 const RenderModal = (Container, modal, unsetModal, isOpening, isClosing, setIsOpening, setIsClosing) => {
-    console.log(Container, modal)
     return <Container modal={modal} unsetModal={unsetModal} isOpening={isOpening} isClosing={isClosing} setIsOpening={setIsOpening} setIsClosing={setIsClosing} />
 }
 

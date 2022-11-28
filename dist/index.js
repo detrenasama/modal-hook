@@ -34,7 +34,6 @@ const ModalProvider = _ref => {
   const closeModal = () => {
     setIsClosing(true);
   };
-  console.log(ContainerComponent);
   return /*#__PURE__*/_react.default.createElement(ModalContext.Provider, _extends({
     value: {
       setModal,
@@ -46,7 +45,6 @@ const ModalProvider = _ref => {
 };
 exports.ModalProvider = ModalProvider;
 const RenderModal = (Container, modal, unsetModal, isOpening, isClosing, setIsOpening, setIsClosing) => {
-  console.log(Container, modal);
   return /*#__PURE__*/_react.default.createElement(Container, {
     modal: modal,
     unsetModal: unsetModal,
