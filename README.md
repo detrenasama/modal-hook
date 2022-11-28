@@ -58,6 +58,19 @@ function MyPageOrSomething() {
 
 ```
 
+### Using custom modal container
+
+Pass it to ModalProvider for using as default container or pass to 
+hook for using it when needed
+
+```js
+
+<ModalProvider DefaultModalComponent={CustomModalContainer}>
+
+useModal(MyModal, {}, CustomModalContainer)
+```
+
+See example in sources
 
 ## License
 

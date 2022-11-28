@@ -6,7 +6,7 @@ const ModalContext = createContext(undefined);
 
 const ModalProvider = ({DefaultModalComponent = Modal, ...props}) => {
     const [modal, setModal] = useState()
-    const [ContainerComponent, setContainerComponent] = useState()
+    const [ContainerComponent, setContainerComponent] = useState(() => DefaultModalComponent)
     const [isOpening, setIsOpening] = useState(false)
     const [isClosing, setIsClosing] = useState(false)
 
@@ -22,26 +22,29 @@ const ModalProvider = ({DefaultModalComponent = Modal, ...props}) => {
         setIsClosing(true)
     }
 
+    console.log(ContainerComponent)
+
     return <ModalContext.Provider value={{setModal, openModal, closeModal, setContainerComponent}} {...props}>
         {props.children}
-        {modal && <RenderModal Container={ContainerComponent ? ContainerComponent : DefaultModalComponent}
-                               modal={modal}
-                               unsetModal={unsetModal}
-                               isOpening={isOpening}
-                               isClosing={isClosing}
-                               setIsOpening={setIsOpening}
-                               setIsClosing={setIsClosing} />}
+        {ContainerComponent && modal && RenderModal(ContainerComponent,
+                               modal,
+                               unsetModal,
+                               isOpening,
+                               isClosing,
+                               setIsOpening,
+                               setIsClosing)}
     </ModalContext.Provider>
 }
 
-const RenderModal = ({Container, modal, unsetModal, ...props}) => {
-    return <Container modal={modal} unsetModal={unsetModal} {...props} />
+const RenderModal = (Container, modal, unsetModal, isOpening, isClosing, setIsOpening, setIsClosing) => {
+    console.log(Container, modal)
+    return <Container modal={modal} unsetModal={unsetModal} isOpening={isOpening} isClosing={isClosing} setIsOpening={setIsOpening} setIsClosing={setIsClosing} />
 }
 
 const useModal = (
     ModalComponent,
     props = {},
-    ContainerComponent = null
+    ContainerComponent = undefined
 ) => {
     const context = useContext(ModalContext)
     if (context === undefined)
@@ -55,7 +58,7 @@ const useModal = (
     } = context
 
     const show = useCallback(() => {
-        setContainerComponent(ContainerComponent)
+        setContainerComponent(() => ContainerComponent)
         setModal(<ModalComponent {...props} />)
         openModal()
     }, [setModal, openModal, ContainerComponent])
