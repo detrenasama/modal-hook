@@ -41,7 +41,7 @@ const Modal = _ref => {
       clearTimeout(timer);
     };
   }, [isClosing, setIsClosing, unsetModal]);
-  const animationStyle = isOpening ? _stylesModule.default.opening : isClosing ? _stylesModule.default.closing : null;
+  const animationStyle = isOpening ? _stylesModule.default.opening : isClosing ? _stylesModule.default.closing : "";
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "".concat(_stylesModule.default.container, " ").concat(animationStyle),
     role: "dialog",

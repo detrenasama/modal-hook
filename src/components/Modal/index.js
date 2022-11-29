@@ -1,7 +1,7 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import styles from './styles.module.css';
 
-const Modal = ({modal, unsetModal, isOpening, isClosing, setIsOpening, setIsClosing}) => {
+const Modal = ({ modal, unsetModal, isOpening, isClosing, setIsOpening, setIsClosing }) => {
 
     // Opening animation
     useEffect(() => {
@@ -32,7 +32,7 @@ const Modal = ({modal, unsetModal, isOpening, isClosing, setIsOpening, setIsClos
         }
     }, [isClosing, setIsClosing, unsetModal])
 
-    const animationStyle = isOpening ? styles.opening : isClosing ? styles.closing : null
+    const animationStyle = isOpening ? styles.opening : isClosing ? styles.closing : ""
 
     return <div className={`${styles.container} ${animationStyle}`} role="dialog" tabIndex="-1">
         <div className={styles.background}></div>
