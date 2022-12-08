@@ -1,7 +1,14 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import styles from './styles.module.css';
 
-const Modal = ({ modal, unsetModal, isOpening, isClosing, setIsOpening, setIsClosing }) => {
+const Modal = ({
+    modal,
+    isClosing,
+    closeModal,
+    stopClosing,
+    isOpening,
+    stopOpening,
+}) => {
 
     // Opening animation
     useEffect(() => {
@@ -9,13 +16,13 @@ const Modal = ({ modal, unsetModal, isOpening, isClosing, setIsOpening, setIsClo
             return
 
         const timer = setTimeout(() => {
-            setIsOpening(false)
+            stopOpening()
         }, 300)
 
         return () => {
             clearTimeout(timer)
         }
-    }, [isOpening, setIsOpening])
+    }, [isOpening, stopOpening])
 
     // Closing animation
     useEffect(() => {
@@ -23,14 +30,13 @@ const Modal = ({ modal, unsetModal, isOpening, isClosing, setIsOpening, setIsClo
             return
 
         const timer = setTimeout(() => {
-            unsetModal()
-            setIsClosing(false)
+            stopClosing()
         }, 300)
 
         return () => {
             clearTimeout(timer)
         }
-    }, [isClosing, setIsClosing, unsetModal])
+    }, [isClosing, stopClosing])
 
     const animationStyle = isOpening ? styles.opening : isClosing ? styles.closing : ""
 

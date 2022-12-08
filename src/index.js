@@ -1,41 +1,51 @@
-import React from 'react';
-import {createContext, useCallback, useContext, useState} from "react";
+import React, {createContext, useCallback, useContext, useState} from "react";
 import Modal from "./components/Modal";
 
 const ModalContext = createContext(undefined);
 
 const ModalProvider = ({DefaultModalComponent = Modal, ...props}) => {
-    const [modal, setModal] = useState()
-    const [ContainerComponent, setContainerComponent] = useState(() => DefaultModalComponent)
-    const [isOpening, setIsOpening] = useState(false)
-    const [isClosing, setIsClosing] = useState(false)
+    const [modals, setModals] = useState([])
+    const [closingModal, setClosingModal] = useState(null)
+    const [openingModal, setOpeningModal] = useState(null)
 
-    const unsetModal = useCallback(() => {
-        setModal(undefined)
-    }, [setModal])
-
-    const openModal = () => {
-        setIsOpening(true)
+    const addModal = (modal, Container) => {
+        setModals(modals => [...modals, {key: "modal_" + new Date().getTime(), modal, Container}])
+        setOpeningModal(modal)
     }
 
-    const closeModal = () => {
-        setIsClosing(true)
+    const unsetModal = (key) => {
+        setModals(modals => {
+            const index = modals.findIndex(e => e.key === key)
+            if (index >= 0) {
+                const newModals = [...modals]
+                newModals.splice(index, 1)
+                return newModals
+            }
+
+            return [...modals]
+        })
     }
 
-    return <ModalContext.Provider value={{setModal, openModal, closeModal, setContainerComponent}} {...props}>
+    const closeModal = (modal) => {
+        setClosingModal(modal)
+    }
+
+    return <ModalContext.Provider value={{addModal, closeModal}} {...props}>
         {props.children}
-        {modal && RenderModal(ContainerComponent ? ContainerComponent : DefaultModalComponent,
-                               modal,
-                               unsetModal,
-                               isOpening,
-                               isClosing,
-                               setIsOpening,
-                               setIsClosing)}
+        {modals.map(({key, modal, Container}) => {
+            const ContainerComponent = Container ? Container : DefaultModalComponent
+            return <ContainerComponent key={key} modal={modal}
+                                       isOpening={modal === openingModal}
+                                       stopOpening={() => setOpeningModal(null)}
+                                       isClosing={modal === closingModal}
+                                       closeModal={() => setClosingModal(modal)}
+                                       stopClosing={() => {
+                                           setClosingModal(null)
+                                           unsetModal(key)
+                                       }}
+            />
+        })}
     </ModalContext.Provider>
-}
-
-const RenderModal = (Container, modal, unsetModal, isOpening, isClosing, setIsOpening, setIsClosing) => {
-    return <Container modal={modal} unsetModal={unsetModal} isOpening={isOpening} isClosing={isClosing} setIsOpening={setIsOpening} setIsClosing={setIsClosing} />
 }
 
 const useModal = (
@@ -48,21 +58,19 @@ const useModal = (
         throw new Error("useModal must be used within a ModalProvider")
 
     const {
-        setModal,
-        openModal,
+        addModal,
         closeModal,
-        setContainerComponent
     } = context
 
+    const modal = <ModalComponent {...props} />
+
     const show = useCallback(() => {
-        setContainerComponent(() => ContainerComponent)
-        setModal(<ModalComponent {...props} />)
-        openModal()
-    }, [setModal, openModal, ContainerComponent])
+        addModal(modal, ContainerComponent)
+    }, [addModal, modal, ContainerComponent])
 
     const close = useCallback(() => {
-        closeModal()
-    }, [closeModal])
+        closeModal(modal)
+    }, [closeModal, modal])
 
     return [show, close]
 }

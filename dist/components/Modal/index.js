@@ -13,34 +13,33 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 const Modal = _ref => {
   let {
     modal,
-    unsetModal,
-    isOpening,
     isClosing,
-    setIsOpening,
-    setIsClosing
+    closeModal,
+    stopClosing,
+    isOpening,
+    stopOpening
   } = _ref;
   // Opening animation
   (0, _react.useEffect)(() => {
     if (!isOpening) return;
     const timer = setTimeout(() => {
-      setIsOpening(false);
+      stopOpening();
     }, 300);
     return () => {
       clearTimeout(timer);
     };
-  }, [isOpening, setIsOpening]);
+  }, [isOpening, stopOpening]);
 
   // Closing animation
   (0, _react.useEffect)(() => {
     if (!isClosing) return;
     const timer = setTimeout(() => {
-      unsetModal();
-      setIsClosing(false);
+      stopClosing();
     }, 300);
     return () => {
       clearTimeout(timer);
     };
-  }, [isClosing, setIsClosing, unsetModal]);
+  }, [isClosing, stopClosing]);
   const animationStyle = isOpening ? _stylesModule.default.opening : isClosing ? _stylesModule.default.closing : "";
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "".concat(_stylesModule.default.container, " ").concat(animationStyle),
