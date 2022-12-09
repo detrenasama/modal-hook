@@ -1,7 +1,8 @@
 import React, {useEffect} from "react";
 import styles from './styles.module.css';
+import {ModalContainerComponent} from "../../index";
 
-const Modal = ({
+const Modal: ModalContainerComponent = ({
     modal,
     isClosing,
     closeModal,
@@ -40,7 +41,7 @@ const Modal = ({
 
     const animationStyle = isOpening ? styles.opening : isClosing ? styles.closing : ""
 
-    return <div className={`${styles.container} ${animationStyle}`} role="dialog" tabIndex="-1">
+    return <div className={`${styles.container} ${animationStyle}`} role="dialog" tabIndex={-1}>
         <div className={styles.background}></div>
         <div className={styles.inner}>
             <div className={styles.body}>
