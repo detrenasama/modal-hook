@@ -1,9 +1,9 @@
 {
   "name": "@detrenasama/modal-hooker",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Modal components by using hooks",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "keywords": [
     "react",
     "modal"

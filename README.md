@@ -3,7 +3,7 @@
 
 [![NPM version][npm-image]][npm-url]
 
-[npm-image]: https://img.shields.io/badge/npm-1.0.8-blue
+[npm-image]: https://img.shields.io/badge/npm-1.0.9-blue
 [npm-url]: https://npmjs.org/package/address
 
 Control your modals with hook
