@@ -1,8 +1,7 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import styles from './styles.module.css';
-import {ModalContainerComponent} from "../../index";
 
-const Modal: ModalContainerComponent = ({
+const Modal = ({
     modal,
     isClosing,
     closeModal,
