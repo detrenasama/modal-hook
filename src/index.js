@@ -8,10 +8,10 @@ const ModalProvider = ({DefaultModalComponent = Modal, ...props}) => {
     const [closingModal, setClosingModal] = useState(null)
     const [openingModal, setOpeningModal] = useState(null)
 
-    const addModal = (modal, Container) => {
+    const addModal = useCallback((modal, Container) => {
         setModals(modals => [...modals, {key: "modal_" + new Date().getTime(), modal, Container}])
         setOpeningModal(modal)
-    }
+    }, [])
 
     const unsetModal = (key) => {
         setModals(modals => {
@@ -66,7 +66,7 @@ const useModal = (
 
     const show = useCallback(() => {
         addModal(modal, ContainerComponent)
-    }, [addModal, modal, ContainerComponent])
+    }, [addModal, ModalComponent, ContainerComponent])
 
     const close = useCallback(() => {
         closeModal(modal)

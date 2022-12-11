@@ -24,14 +24,14 @@ const ModalProvider = _ref => {
   const [modals, setModals] = (0, _react.useState)([]);
   const [closingModal, setClosingModal] = (0, _react.useState)(null);
   const [openingModal, setOpeningModal] = (0, _react.useState)(null);
-  const addModal = (modal, Container) => {
+  const addModal = (0, _react.useCallback)((modal, Container) => {
     setModals(modals => [...modals, {
       key: "modal_" + new Date().getTime(),
       modal,
       Container
     }]);
     setOpeningModal(modal);
-  };
+  }, []);
   const unsetModal = key => {
     setModals(modals => {
       const index = modals.findIndex(e => e.key === key);
@@ -85,7 +85,7 @@ const useModal = function useModal(ModalComponent) {
   const modal = /*#__PURE__*/_react.default.createElement(ModalComponent, props);
   const show = (0, _react.useCallback)(() => {
     addModal(modal, ContainerComponent);
-  }, [addModal, modal, ContainerComponent]);
+  }, [addModal, ModalComponent, ContainerComponent]);
   const close = (0, _react.useCallback)(() => {
     closeModal(modal);
   }, [closeModal, modal]);
