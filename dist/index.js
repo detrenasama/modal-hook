@@ -25,11 +25,15 @@ const ModalProvider = _ref => {
   const [closingModal, setClosingModal] = (0, _react.useState)(null);
   const [openingModal, setOpeningModal] = (0, _react.useState)(null);
   const addModal = (0, _react.useCallback)((modal, Container) => {
-    setModals(modals => [...modals, {
-      key: "modal_" + new Date().getTime(),
-      modal,
-      Container
-    }]);
+    setModals(modals => {
+      const found = modals.find(e => e.modal.type === modal.type);
+      if (found) return modals;
+      return [...modals, {
+        key: "modal_" + new Date().getTime(),
+        modal,
+        Container
+      }];
+    });
     setOpeningModal(modal);
   }, []);
   const unsetModal = key => {

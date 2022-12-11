@@ -9,7 +9,13 @@ const ModalProvider = ({DefaultModalComponent = Modal, ...props}) => {
     const [openingModal, setOpeningModal] = useState(null)
 
     const addModal = useCallback((modal, Container) => {
-        setModals(modals => [...modals, {key: "modal_" + new Date().getTime(), modal, Container}])
+        setModals(modals => {
+            const found = modals.find(e => e.modal.type === modal.type)
+            if (found)
+                return modals
+
+            return [...modals, {key: "modal_" + new Date().getTime(), modal, Container}]
+        })
         setOpeningModal(modal)
     }, [])
 
