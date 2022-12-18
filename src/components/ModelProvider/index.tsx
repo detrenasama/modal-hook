@@ -1,4 +1,4 @@
-import React, { ComponentType, createContext, ReactElement, useCallback, useState } from 'react'
+import React, { ComponentType, createContext, createElement, ReactElement, useCallback, useState } from 'react'
 import { ModalContainerComponent, ModalProviderProps } from '../../types'
 import Modal from '../Modal'
 
@@ -50,21 +50,19 @@ const ModalProvider: ComponentType<ModalProviderProps> = (props: ModalProviderPr
         <ModalContext.Provider value={{ addModal, closeModal }}>
             {props.children}
             {modals.map(({ key, modal, Container }) => {
-                const ContainerComponent = Container ? Container : props.DefaultModalComponent
-                return (
-                    <ContainerComponent
-                        key={key}
-                        modal={modal}
-                        isOpening={modal === openingModal}
-                        stopOpening={() => setOpeningModal(null)}
-                        isClosing={modal === closingModal}
-                        closeModal={() => setClosingModal(modal)}
-                        stopClosing={() => {
-                            setClosingModal(null)
-                            unsetModal(key)
-                        }}
-                    />
-                )
+                const ContainerComponent: ModalContainerComponent = Container || props.DefaultModalComponent || Modal
+                return createElement(ContainerComponent, {
+                    key,
+                    modal,
+                    isOpening: modal === openingModal,
+                    stopOpening: () => setOpeningModal(null),
+                    isClosing: modal === closingModal,
+                    closeModal: () => setClosingModal(modal),
+                    stopClosing: () => {
+                        setClosingModal(null)
+                        unsetModal(key)
+                    },
+                })
             })}
         </ModalContext.Provider>
     )

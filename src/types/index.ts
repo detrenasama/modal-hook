@@ -10,5 +10,5 @@ export interface ModalContainerProps extends PropsWithChildren {
     stopOpening: () => void
 }
 export interface ModalProviderProps extends PropsWithChildren {
-    DefaultModalComponent: ModalContainerComponent
+    DefaultModalComponent?: ModalContainerComponent
 }
