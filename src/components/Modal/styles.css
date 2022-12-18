@@ -1,4 +1,4 @@
-.background {
+.modalHook--background {
     background: #000 !important;
     opacity: .1 !important;
     box-sizing: border-box;
@@ -12,7 +12,7 @@
     transition-timing-function: cubic-bezier(.47,0,.74,.71);
 }
 
-.container {
+.modalHook--container {
     -webkit-backface-visibility: hidden;
     height: 100%;
     left: 0;
@@ -27,17 +27,17 @@
     z-index: 99992;
 }
 
-.opening {
-    animation: modalSlideDown 360ms ease;
+.modalHook--opening {
+    animation: modalHookSlideDown 360ms ease;
     animation-iteration-count: 1;
 }
 
-.closing {
-    animation: modalSlideDown 360ms ease reverse;
+.modalHook--closing {
+    animation: modalHookSlideDown 360ms ease reverse;
     animation-iteration-count: 1;
 }
 
-.inner {
+.modalHook--inner {
     box-sizing: border-box;
     bottom: 0;
     left: 0;
@@ -46,7 +46,7 @@
     top: 0;
 }
 
-.body {
+.modalHook--body {
     box-sizing: border-box;
     -webkit-backface-visibility: hidden;
     outline: none;
@@ -73,7 +73,7 @@
     height: 100%;
 }
 
-@keyframes modalSlideDown {
+@keyframes modalHookSlideDown {
     0% {
         opacity: 0;
         transform: translateY(100%);
