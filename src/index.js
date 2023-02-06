@@ -1,5 +1,4 @@
 import useModal from './hooks/useModal'
-import ModalProvider from './components/ModelProvider'
-import Modal from './components/Modal'
+import ModalContainer from './components/ModalContainer'
 
-export { useModal, ModalProvider, Modal }
+export { useModal, ModalContainer }

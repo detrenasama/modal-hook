@@ -3,7 +3,7 @@
 
 [![NPM version][npm-image]][npm-url]
 
-[npm-image]: https://img.shields.io/badge/npm-1.2.0-blue
+[npm-image]: https://img.shields.io/badge/npm-2.0.0-blue
 [npm-url]: https://npmjs.org/package/address
 
 Control your modals with hook
@@ -16,17 +16,36 @@ $ npm install @detrenasama/modal-hooker
 
 ## Usage
 
-### Wrap your application into ModalProvider
+### Create modal component (wrapper)
+
+Next props will be passed to component:
+
+`modal` ... content of wrapper. Just draw it in render as {modal} \
+`isOpening` ... current state. Use for animations (styles) \
+`isClosing` ... current state. Use for animations (styles) \
+`closeModal` ... callback for closing this modal
+
+Pass it to ModalContainer for using as default container.
+
+Pass to hook for using it when needed.
 
 ```js
+useModal(MyModal, {}, ModalWrapper)
+```
 
-<ModalProvider>
-    <App />
-</ModalProvider>
+### Insert ModalContainer component into your Application
+
+If your modal can contain links, put it into your Router component
+Provide default modal, that will be used as modal wrapper
+
+```js
+<ModalContainer defaultModalComponent="ModalWrapper" />
 
 ```
 
 ### Create modal content component
+
+Instance of this content will be passed as `modal` prop into your wrapper 
 
 ```js
 
@@ -39,7 +58,7 @@ function MyModal({title, onClose}) {
 
 ```
 
-### Use modal into component where you need it
+### Use modal hook in component where you need to show modal
 
 ```js
 
@@ -57,20 +76,6 @@ function MyPageOrSomething() {
 }
 
 ```
-
-### Using custom modal container
-
-Pass it to ModalProvider for using as default container or pass to 
-hook for using it when needed
-
-```js
-
-<ModalProvider DefaultModalComponent={CustomModalContainer}>
-
-useModal(MyModal, {}, CustomModalContainer)
-```
-
-See example in sources
 
 ## License
 

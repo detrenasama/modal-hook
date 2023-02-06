@@ -1,14 +1,25 @@
-import { ComponentType, PropsWithChildren, ReactNode } from 'react'
+import {ComponentType, PropsWithChildren, ReactNode} from 'react'
 
-export type ModalContainerComponent = ComponentType<ModalContainerProps>
-export interface ModalContainerProps extends PropsWithChildren {
+export type Id = string
+
+export type ModalComponentType = ComponentType<ModalProps> & {closingDelay: number}
+export interface ModalProps extends PropsWithChildren {
     modal: ReactNode
     isClosing: boolean
     closeModal: () => void
-    stopClosing: () => void
     isOpening: boolean
-    stopOpening: () => void
 }
-export interface ModalProviderProps extends PropsWithChildren {
-    DefaultModalComponent?: ModalContainerComponent
+export interface ModalContainerProps extends PropsWithChildren {
+    defaultModalComponent: ModalComponentType
+}
+
+
+export interface ModalRecord {
+    key: Id,
+    modal: ReactNode,
+    container: ModalComponentType,
+}
+
+export interface ContainerInstance {
+    props: ModalContainerProps;
 }

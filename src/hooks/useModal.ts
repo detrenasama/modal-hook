@@ -1,24 +1,29 @@
-import { ComponentType, createElement, useCallback, useContext, useMemo } from 'react'
-import { ModalContext } from '../components/ModelProvider'
-import { ModalContainerComponent } from '../types'
+import {ComponentType, createElement, useCallback, useEffect, useMemo, useRef} from 'react'
+import {Id, ModalComponentType} from '../types'
+import {closeModal, declareModal, openModal, unsetModal} from "../core/modal";
 
-const useModal = (ModalComponent: ComponentType, props: object = {}, ContainerComponent?: ModalContainerComponent) => {
-    const context = useContext(ModalContext)
-    if (context === undefined) throw new Error('useModal must be used within a ModalProvider')
+const useModal = (ModalComponent: ComponentType, props: object = {}, ContainerComponent?: ModalComponentType) => {
 
-    const { addModal, closeModal } = context
+    const ref = useRef<Id>("")
 
-    const createModal = useMemo(() => {
+    useEffect(() => {
+        return () => {
+            unsetModal(ref.current)
+        }
+    }, [])
+
+    const createdModal = useMemo(() => {
         return createElement(ModalComponent, props)
     }, [ModalComponent, props])
 
     const show = useCallback(() => {
-        addModal(createModal, ContainerComponent)
-    }, [addModal, ContainerComponent, createModal])
+        ref.current = declareModal(createdModal, ContainerComponent)
+        openModal(ref.current)
+    }, [ref, declareModal, ContainerComponent, createdModal])
 
     const close = useCallback(() => {
-        closeModal(createModal)
-    }, [closeModal, createModal])
+        closeModal(ref.current)
+    }, [ref, closeModal, ContainerComponent])
 
     return [show, close]
 }
