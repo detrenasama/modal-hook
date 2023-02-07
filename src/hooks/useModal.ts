@@ -1,16 +1,10 @@
-import {ComponentType, createElement, useCallback, useEffect, useMemo, useRef} from 'react'
+import {ComponentType, createElement, useCallback, useMemo, useRef} from 'react'
 import {Id, ModalComponentType} from '../types'
-import {closeModal, declareModal, openModal, unsetModal} from "../core/modal";
+import {closeModal, declareModal, openModal} from "../core/modal";
 
 const useModal = (ModalComponent: ComponentType, props: object = {}, ContainerComponent?: ModalComponentType) => {
 
     const ref = useRef<Id>("")
-
-    useEffect(() => {
-        return () => {
-            unsetModal(ref.current)
-        }
-    }, [])
 
     const createdModal = useMemo(() => {
         return createElement(ModalComponent, props)
