@@ -15,6 +15,7 @@ const ModalContainer: FC<ModalContainerProps> = (props) => {
                 const ContainerComponent: ModalComponentType = container
 
                 return createElement(ContainerComponent, {
+                    key,
                     modal,
                     isOpening: openIds.includes(key),
                     isClosing: closingIds.includes(key),
