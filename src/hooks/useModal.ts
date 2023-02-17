@@ -8,10 +8,10 @@ const useModal = (ModalComponent: ComponentType, props: object = {}, ContainerCo
 
     const createdModal = useMemo(() => {
         return createElement(ModalComponent, props)
-    }, [ModalComponent, props])
+    }, [ref])
 
     const show = useCallback(() => {
-        if (ref.current.length === 0)
+        if (ref.current?.length === 0)
             ref.current = declareModal(createdModal, ContainerComponent)
 
         openModal(ref.current)
@@ -19,6 +19,7 @@ const useModal = (ModalComponent: ComponentType, props: object = {}, ContainerCo
 
     const close = useCallback(() => {
         closeModal(ref.current)
+        ref.current = ''
     }, [ref, closeModal, ContainerComponent])
 
     return [show, close]
