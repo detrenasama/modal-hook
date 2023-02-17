@@ -20,6 +20,8 @@ const useModalContainer = (props: ModalContainerProps) => {
 
         return () => {
             modalRecords.clear();
+            setClosingIds([])
+            setOpenIds([])
             eventManager
                 .off(Event.Declare)
                 .off(Event.Show)
@@ -53,7 +55,6 @@ const useModalContainer = (props: ModalContainerProps) => {
         const timeout = setTimeout(() => {
             setClosingIds(prev => prev.filter(e => e !== id))
             clearTimeout(timeout)
-            unsetModal(_result, id)
         }, modal?.container?.closingDelay)
     }
 
