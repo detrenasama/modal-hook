@@ -11,7 +11,9 @@ const useModal = (ModalComponent: ComponentType, props: object = {}, ContainerCo
     }, [ModalComponent, props])
 
     const show = useCallback(() => {
-        ref.current = declareModal(createdModal, ContainerComponent)
+        if (ref.current.length === 0)
+            ref.current = declareModal(createdModal, ContainerComponent)
+
         openModal(ref.current)
     }, [ref, declareModal, ContainerComponent, createdModal])
 

@@ -51,13 +51,15 @@ const useModalContainer = (props: ModalContainerProps) => {
         const modal = modalRecords.get(id)
 
         const timeout = setTimeout(() => {
-            unsetModal(_result, id)
+            setClosingIds(prev => prev.filter(e => e !== id))
             clearTimeout(timeout)
+            unsetModal(_result, id)
         }, modal?.container?.closingDelay)
     }
 
     const unsetModal = (_result: ModalRecord, id: Id) => {
         modalRecords.delete(id)
+        setOpenIds(prev => prev.filter(e => e !== id))
         setClosingIds(prev => prev.filter(e => e !== id))
     }
 
