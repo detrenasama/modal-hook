@@ -34,11 +34,13 @@ const useModalContainer = (props: ModalContainerProps) => {
         instance.props = props;
     });
 
-
     function getModalsToRender<T>(
         cb: (modalList: ModalRecord[]) => T
     ) {
-        return cb(Array.from(modalRecords.values()))
+        const openModalRecords = Array.from(modalRecords.values())
+            .filter(item => openIds.includes(item.key) || closingIds.includes(item.key))
+
+        return cb(openModalRecords)
     }
 
     function openModal(_result: ModalRecord, id: Id) {
