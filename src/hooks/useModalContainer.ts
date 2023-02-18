@@ -16,7 +16,7 @@ const useModalContainer = (props: ModalContainerProps) => {
             .on(Event.Declare, addModal)
             .on(Event.Show, openModal)
             .on(Event.Hide, closeModal)
-            .on(Event.Unset, unsetModal)
+            .on(Event.Unset, removeModal)
 
         return () => {
             modalRecords.clear();
@@ -57,10 +57,11 @@ const useModalContainer = (props: ModalContainerProps) => {
         const timeout = setTimeout(() => {
             setClosingIds(prev => prev.filter(e => e !== id))
             clearTimeout(timeout)
+            eventManager.emit(Event.Unset, id)
         }, modal?.container?.closingDelay)
     }
 
-    const unsetModal = (_result: ModalRecord, id: Id) => {
+    const removeModal = (_result: ModalRecord, id: Id) => {
         modalRecords.delete(id)
         setOpenIds(prev => prev.filter(e => e !== id))
         setClosingIds(prev => prev.filter(e => e !== id))
