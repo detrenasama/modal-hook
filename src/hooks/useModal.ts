@@ -1,13 +1,14 @@
 import {ComponentType, createElement, useCallback, useEffect, useMemo, useRef} from 'react'
-import {Id, ModalComponentType} from '../types'
+import {Id, ModalComponentType, ModalRecord} from '../types'
 import {closeModal, declareModal, openModal} from "../core/modal";
 import {Event, eventManager} from "../core/eventManager";
 
 const useModal = (ModalComponent: ComponentType, props: object = {}, ContainerComponent?: ModalComponentType) => {
 
     const ref = useRef<Id>("")
-    const resetRef = () => {
-        ref.current = ""
+    const resetRef = (_result: ModalRecord, id: Id) => {
+        if (id === ref.current)
+            ref.current = ""
     }
 
     useEffect(() => {
@@ -31,7 +32,7 @@ const useModal = (ModalComponent: ComponentType, props: object = {}, ContainerCo
 
     const close = useCallback(() => {
         closeModal(ref.current)
-        resetRef()
+        ref.current = ""
     }, [ref.current, closeModal, ContainerComponent])
 
     return [show, close]
