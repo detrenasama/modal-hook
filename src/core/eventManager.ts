@@ -40,7 +40,7 @@ export const eventManager: EventManager = {
 
     off(event, callback) {
         if (callback) {
-            const cb = this.list.get(event)!.filter((cb: Callback) => cb !== callback);
+            const cb = this.list.has(event) ? this.list.get(event)!.filter((cb: Callback) => cb !== callback) : [];
             this.list.set(event, cb);
             return this;
         }
