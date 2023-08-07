@@ -1,10 +1,13 @@
-import {ComponentType, createElement, useCallback, useEffect, useMemo, useRef} from 'react'
+import {ComponentProps, ComponentType, createElement, useCallback, useEffect, useMemo, useRef} from 'react'
 import {Id, ModalComponentType, ModalRecord} from '../types'
 import {closeModal, declareModal, openModal} from "../core/modal";
 import {Event, eventManager} from "../core/eventManager";
 
-const useModal = (ModalComponent: ComponentType, props: object = {}, ContainerComponent?: ModalComponentType) => {
-
+const useModal = <T extends ComponentType>(
+    ModalComponent: T,
+    props: ComponentProps<T>,
+    ContainerComponent?: ModalComponentType,
+) => {
     const ref = useRef<Id>("")
     const resetRef = (_result: ModalRecord, id: Id) => {
         if (id === ref.current)
