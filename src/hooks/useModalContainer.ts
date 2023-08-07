@@ -1,7 +1,7 @@
 import {ReactNode, useEffect, useRef, useState} from "react";
 import {ContainerInstance, Id, ModalComponentType, ModalContainerProps, ModalRecord} from "../types";
-import {uniqueId} from "underscore";
 import {eventManager, Event} from "../core/eventManager";
+import { v4 } from 'uuid'
 
 const useModalContainer = (props: ModalContainerProps) => {
     const [openIds, setOpenIds] = useState<Id[]>([])
@@ -67,7 +67,7 @@ const useModalContainer = (props: ModalContainerProps) => {
     }
 
     function addModal(result: ModalRecord, modal: ReactNode, container?: ModalComponentType) {
-        const key = uniqueId("modal_")
+        const key = v4()
 
         const containerComponent = container || instance.props.defaultModalComponent
 
