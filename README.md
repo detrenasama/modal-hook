@@ -3,7 +3,7 @@
 
 [![NPM version][npm-image]][npm-url]
 
-[npm-image]: https://img.shields.io/badge/npm-2.1.2-blue
+[npm-image]: https://img.shields.io/badge/npm-2.2.0-blue
 [npm-url]: https://npmjs.org/package/address
 
 Control your modals with hook
@@ -75,6 +75,22 @@ function MyPageOrSomething() {
     </div>
 }
 
+```
+
+### Or use it from non-component functions (version >= 2.2.0)
+
+```js
+import {declare, open, close} from '@detrenasama/modal-hooker';
+function someErrorHandler(error) {
+    const modalId = declare(ErrorModal, {
+        error: error,
+        onClose: () => {
+            close(modalId)
+        }
+    })
+    
+    open(modalId)
+}
 ```
 
 ## License
